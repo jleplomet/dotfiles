@@ -1,3 +1,10 @@
+echo ""
+echo "################################################"
+echo "Installing Homebrew (http://brew.sh/)"
+echo "################################################"
+echo ""
+
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 # https://github.com/jamiew/git-friendly
 # the `push` command which copies the github compare URL to my clipboard is heaven
