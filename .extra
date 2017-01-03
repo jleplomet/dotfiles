@@ -1,7 +1,5 @@
 # PATH
 
-#PATH=/usr/local/php5/bin:$PATH
-#PATH=/usr/local/mysql/bin:$PATH
-#PATH=$PATH:~/.composer/vendor/bin
+PATH=$PATH:~/.composer/vendor/bin
 
 export PATH

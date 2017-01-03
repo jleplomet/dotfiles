@@ -6,10 +6,6 @@ echo ""
 
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-# https://github.com/jamiew/git-friendly
-# the `push` command which copies the github compare URL to my clipboard is heaven
-# sudo bash < <( curl https://raw.github.com/jamiew/git-friendly/master/install.sh)
-
 echo ""
 echo "################################################"
 echo "Installing RVM (https://rvm.io)"
@@ -17,14 +13,6 @@ echo "################################################"
 echo ""
 
 curl -L https://get.rvm.io | bash -s stable --ruby
-
-echo ""
-echo "################################################"
-echo "Installing Gems: Sass, Compass"
-echo "################################################"
-echo ""
-
-gem install sass compass
 
 echo ""
 echo "################################################"
@@ -48,11 +36,36 @@ nvm alias default node
 
 echo ""
 echo "################################################"
-echo "Installing Commonly used NPM dependencies"
+echo "Installing Brew Packages"
 echo "################################################"
 echo ""
 
-npm install -g gulp grunt-cli
+brew install yarn httpie "homebrew/php/php71" mysql
+
+echo ""
+echo "################################################"
+echo "Installing Composer"
+echo "################################################"
+echo ""
+
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+
+echo ""
+echo "################################################"
+echo "Installing Global Composer Packages"
+echo "################################################"
+echo ""
+
+composer global require "laravel/installer" "laravel/valet"
+
+echo ""
+echo "################################################"
+echo "Installing git-friendly"
+echo "################################################"
+echo ""
+
+curl -L https://raw.github.com/jamiew/git-friendly/master/install.sh | bash
 
 echo ""
 echo "################################################"
@@ -78,7 +91,15 @@ unset doIt
 source ~/.bash_profile
 
 echo ""
+echo "################################################"
+echo "Installing Laravel Valet"
+echo "################################################"
+echo ""
+
+valet install
+
+echo ""
 echo "------------------------------------------------"
-echo "DONE. PLEASE CLOSE YOUR TERMINAL AND REOPEN."
+echo "DONE."
 echo "------------------------------------------------"
 echo ""
