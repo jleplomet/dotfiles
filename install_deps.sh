@@ -40,7 +40,7 @@ echo "Installing Brew Packages"
 echo "################################################"
 echo ""
 
-brew install yarn httpie "homebrew/php/php71" mysql
+brew install yarn httpie
 
 echo ""
 echo "################################################"
@@ -53,50 +53,82 @@ mv composer.phar /usr/local/bin/composer
 
 echo ""
 echo "################################################"
-echo "Installing Global Composer Packages"
-echo "################################################"
-echo ""
-
-composer global require "laravel/installer" "laravel/valet"
-
-echo ""
-echo "################################################"
 echo "Installing git-friendly"
 echo "################################################"
 echo ""
 
 curl -L https://raw.github.com/jamiew/git-friendly/master/install.sh | bash
 
-echo ""
-echo "################################################"
-echo "Installing dotfiles. This will simplify adding directories to your PATH."
-echo "This will also make sure RVM and NVM load correctly on any new session."
-echo "################################################"
-echo ""
+function installPhpMySql() {
+  echo ""
+  echo "################################################"
+  echo "Installing PHP 7.1/MySQL"
+  echo "################################################"
+  echo ""
 
-function doIt() {
-	rsync --exclude ".git/" --exclude ".DS_Store" --exclude "sync.sh" --exclude "install_deps.sh" --exclude "README.md" -av . ~
+  brew install "homebrew/php/php71" mysql
 }
 
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
-	doIt
+  installPhpMySql
 else
-	read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1
-	echo
-	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		doIt
-	fi
+  read -p "Would you like to install PHP 7.1 and MySQL? (y/n)" -n 1
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    installPhpMySql
+  fi
 fi
-unset doIt
-source ~/.bash_profile
 
-echo ""
-echo "################################################"
-echo "Installing Laravel Valet"
-echo "################################################"
-echo ""
+function installLaravel() {
+  echo ""
+  echo "################################################"
+  echo "Installing Laravel"
+  echo "################################################"
+  echo ""
+  composer global require "laravel/installer" "laravel/valet"
+  valet install
+}
 
-valet install
+if [ "$1" == "--force" -o "$1" == "-f" ]; then
+  installLaravel
+else
+  read -p "Would you like to install Laravel? (y/n)" -n 1
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    installLaravel
+  fi
+fi
+
+# echo ""
+# echo "################################################"
+# echo "Installing dotfiles. This will simplify adding directories to your PATH."
+# echo "This will also make sure RVM and NVM load correctly on any new session."
+# echo "################################################"
+# echo ""
+#
+# function doIt() {
+# 	rsync --exclude ".git/" --exclude ".DS_Store" --exclude "sync.sh" --exclude "install_deps.sh" --exclude "README.md" -av . ~
+# }
+#
+# if [ "$1" == "--force" -o "$1" == "-f" ]; then
+# 	doIt
+# else
+# 	read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1
+# 	echo
+# 	if [[ $REPLY =~ ^[Yy]$ ]]; then
+# 		doIt
+# 	fi
+# fi
+# unset doIt
+# source ~/.bash_profile
+
+#echo ""
+#echo "################################################"
+#echo "Installing Laravel Valet"
+#echo "################################################"
+#echo ""
+
+#valet install
 
 echo ""
 echo "------------------------------------------------"
